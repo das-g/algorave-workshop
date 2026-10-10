@@ -1,0 +1,22 @@
+options:
+  incremental_lists: true
+  implicit_slide_ends: true
+  list_item_newlines: 3
+snippet:
+  exec:
+    enable: true
+  exec_replace:
+    enable: true
+transition:
+  duration_millis: 750
+  frames: 45
+  animation:
+    style: slide_horizontal
+defaults:
+  max_columns: 120
+  max_rows: 120
+export:
+  snippets: sequential
+  dimensions:
+    columns: 80
+    rows: 30
