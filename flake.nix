@@ -19,6 +19,19 @@
             }
           )
         );
+      tidalRun = pkgs: pkgs.writeShellApplication {
+        name = "tidal-run";
+        runtimeInputs = [ pkgs.tidal-cycles-full ];
+        text = ''
+          file="''${1:?usage: tidal-run <file.tidal>}"
+          [[ -e "$file" ]] || { echo "error: $file not found" >&2; exit 1; }
+          # script="$(mktemp)"
+          # cat "$file" > "$script"
+          # trap 'rm -f "$script"' EXIT
+          # exec tidal-cycles -ghci-script "$script"
+          exec tidal-cycles -ghci-script "$file"
+        '';
+      };
     in
     {
       devShells = eachSystem (pkgs: {
@@ -28,9 +41,14 @@
             alsa-lib
             presenterm
             qrencode
+            tidal-cycles-full
+            (tidalRun pkgs)
           ];
           env = {
-            LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:${pkgs.lib.makeLibraryPath [ pkgs.alsa-lib ]}";
+            LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:${pkgs.lib.makeLibraryPath [
+              pkgs.alsa-lib
+              pkgs.pipewire.jack
+            ]}";
           };
         };
       });
