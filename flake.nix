@@ -25,10 +25,6 @@
         text = ''
           file="''${1:?usage: tidal-run <file.tidal>}"
           [[ -e "$file" ]] || { echo "error: $file not found" >&2; exit 1; }
-          # script="$(mktemp)"
-          # cat "$file" > "$script"
-          # trap 'rm -f "$script"' EXIT
-          # exec tidal-cycles -ghci-script "$script"
           exec tidal-cycles -ghci-script "$file"
         '';
       };
@@ -38,9 +34,13 @@
         default = pkgs.mkShellNoCC {
           packages = with pkgs; [
             nodejs_22
-            alsa-lib
+
             presenterm
             qrencode
+
+            alsa-lib
+            supercollider
+            supercolliderPlugins.sc3-plugins
             tidal-cycles-full
             (tidalRun pkgs)
           ];
