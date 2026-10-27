@@ -92,6 +92,13 @@ Or in the terminal, with the server set up as above:
 nix run .#strudel-play -- example/example.strudel
 ```
 
+The same song, translated to Tidal, lives in `example/example.tidal`:
+
+```sh
+superdirt-start                      # terminal 1: sound engine
+tidal-run example/example.tidal      # terminal 2: play it
+```
+
 ## Tidal Cycles
 
 [TidalCycles](https://tidalcycles.org/) is a live coding language for music
